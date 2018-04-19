@@ -1,0 +1,30 @@
+{
+  "name": "nettpro-http2",
+  "version": "1.0.0",
+  "description": "A simple http2 framework",
+  "main": "http2.js",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "net": "^1.0.2",
+    "nettpro-http2": "^1.0.0",
+    "url": "^0.11.0",
+    "util": "^0.10.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OleHenFo/Nettpro2018Http2.git"
+  },
+  "keywords": [
+    "http2"
+  ],
+  "author": "olehenfo, hallsva, simenms",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OleHenFo/Nettpro2018Http2/issues"
+  },
+  "homepage": "https://github.com/OleHenFo/Nettpro2018Http2#readme"
+}
