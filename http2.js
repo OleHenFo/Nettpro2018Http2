@@ -17,7 +17,7 @@ server = net.createServer((connection) => {
    ////////////////////
 
    printData(data);
-   sendHelloWorld(socket);
+   switchProtocols(socket);
    socket.end();
  });
 
@@ -40,8 +40,17 @@ function printData(data){
   console.log(string);
 }
 
+function switchProtocols(socket){
+  let response = "HTTP/1.1 101 Switching Protocols\r\n" +
+                "Connection: Upgrade\r\n" +
+                "Upgrade: h2c"+
+                "\r\n"
+  socket.write(response);
+  socket.pipe(socket);
+}
+
 function sendHelloWorld(socket){
-  let response = "HTTP/2 200 OK\r\n" +
+  let response = "HTTP/1.1 200 OK\r\n" +
                 "Date: " + (new Date().toString()) + "\r\n" +
                 "Server: " + server.address() + "\r\n" +
                 "Content-Length: 13\r\n" +
