@@ -1,4 +1,5 @@
 let net = require("net");
+let fs = require("fs");
 let host;
 let port;
 let server;
@@ -12,12 +13,13 @@ server = net.createServer((connection) => {
  }).on('error',() => {
    console.log("Error connecting to socket");
  }).on('data',(data) => {
+
    ////////////////////
-   // TODO: HANDLE DATA
+   // TODO: HANDLE DATA PLS HELP WHAT
    ////////////////////
 
    printData(data);
-   switchProtocols(socket);
+   sendHttp(socket);
    socket.end();
  });
 
@@ -40,16 +42,7 @@ function printData(data){
   console.log(string);
 }
 
-function switchProtocols(socket){
-  let response = "HTTP/1.1 101 Switching Protocols\r\n" +
-                "Connection: Upgrade\r\n" +
-                "Upgrade: h2c"+
-                "\r\n"
-  socket.write(response);
-  socket.pipe(socket);
-}
-
-function sendHelloWorld(socket){
+function sendHttp(socket){
   let response = "HTTP/1.1 200 OK\r\n" +
                 "Date: " + (new Date().toString()) + "\r\n" +
                 "Server: " + server.address() + "\r\n" +
