@@ -1,12 +1,18 @@
-let net = require("net");
+let tls = require("tls");
 let fs = require("fs");
-let host;
 let port;
 let server;
 
-server = net.createServer((connection) => {
+let context = {
+  key: fs.readFileSync('key.key'),
+  cert: fs.readFileSync('cert.crt')
+}
+
+server = tls.createServer(context, (connection) => {
   let socket = connection;
- console.log('client connected');
+
+  console.log('server connected',
+              socket.authorized ? 'authorized' : 'unauthorized');
 
  socket.on('end', function() {
     console.log('client disconnected');
@@ -27,7 +33,7 @@ server = net.createServer((connection) => {
   console.log("Error creating server");
 });
 
-start(8080);
+start(8443);
 function start(port){
   server.listen(port, () =>{
     console.log("Listening...");
@@ -43,14 +49,10 @@ function printData(data){
 }
 
 function sendHttp(socket){
-  let response = "HTTP/1.1 200 OK\r\n" +
-                "Date: " + (new Date().toString()) + "\r\n" +
-                "Server: " + server.address() + "\r\n" +
-                "Content-Length: 13\r\n" +
-                "Content-Type: text/html\r\n" +
-                "Connection: Closed\r\n" +
-                "\r\n" +
-                "Hello World!\r\n"
-  socket.write(response);
+  let response = {
+    ":status" : 200
+  };
+  let buf = Buffer.from(JSON.stringify(response));
+  socket.write(buf);
   socket.pipe(socket);
 }
